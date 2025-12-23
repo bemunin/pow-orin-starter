@@ -29,7 +29,7 @@ A starter template for streamlined NVIDIA Isaac Sim and Isaac ROS workflows on J
 
 3. Check system compatibility:
    ```bash
-   # Accept the NVIDIA EULA agreement by typing YES when prompted
+   # Accept the NVIDIA EULA agreement by typing Yes when prompted
    pow sim check 
    ```
 3. Initialize sim project:
@@ -61,6 +61,11 @@ A starter template for streamlined NVIDIA Isaac Sim and Isaac ROS workflows on J
    pow sim info --local-assets
    # or
    pow sim info -l
+   ```   
+
+   Finally, run Isaac Sim again with `--reset-user` flag to update the kit asset config:
+   ```bash
+   pow sim run -- --reset-user
    ```   
 
 ## ⚙️ Configuration
