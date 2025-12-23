@@ -6,27 +6,14 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "toml>=0.10.2",
-]
-
-[project.optional-dependencies]
-# actual usage
-sim = [
-    "isaacsim[all,extscache]==5.1.0",
-]
-# For pow-cli development and staging versions
-staging = [
-    "pow-cli",
+    "pow-cli>=0.1.0a1",
 ]
 
 [[tool.uv.index]]
 url = "https://pypi.nvidia.com/"
 
-[[tool.uv.index]]
-name = "testpypi"
-url = "https://test.pypi.org/simple/"
-explicit = true
-
-[tool.uv.sources]
-pow-cli = [
-    { index = "testpypi", marker = "extra == 'staging'" },
+[project.optional-dependencies]
+# actual usage
+sim = [
+    "isaacsim[all,extscache]==5.1.0",
 ]

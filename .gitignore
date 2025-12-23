@@ -112,3 +112,5 @@ www/js/*
 
 # Isaac Powerpack
 .pow
+
+__pycache__/

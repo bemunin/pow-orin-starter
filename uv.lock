@@ -1794,15 +1794,15 @@ wheels = [
 
 [[package]]
 name = "pow-cli"
-version = "0.0.2"
-source = { registry = "https://test.pypi.org/simple/" }
+version = "0.1.0a1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "toml" },
 ]
-sdist = { url = "https://test-files.pythonhosted.org/packages/97/8d/bba6802495ea5e5f97086eaad041f24b011d067e0eaaa83b567f99f6793c/pow_cli-0.0.2.tar.gz", hash = "sha256:2667368827100ac787556ddeca16eba90fbe62e4c822d6136830d7952a2d3755", size = 8567, upload-time = "2025-12-18T03:26:16.982Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/bc/2f/c7577c05262477e8705f766a1cb457e5e919845c4358106389b9fab1966c/pow_cli-0.1.0a1.tar.gz", hash = "sha256:9c0cb56affcf3276edc36086dfd1889d0eca4800c0abccd132e011edc54003ef", size = 14797, upload-time = "2025-12-23T03:19:37.504Z" }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/a1/f2/d45a9dc10cbc3b10802a2b4f9af162bbb2e40b601b8f162611282479861f/pow_cli-0.0.2-py3-none-any.whl", hash = "sha256:7cfe8646034f2a7201644fce69a873b0dc4af74aa18c692006d042d2da9cd054", size = 11231, upload-time = "2025-12-18T03:26:14.884Z" },
+    { url = "https://files.pythonhosted.org/packages/d1/2e/3b07480e087de0358519d8875bcff7fff833cc185c89481a1ceb6d6c30e1/pow_cli-0.1.0a1-py3-none-any.whl", hash = "sha256:5b0d49632d9afe7f77c0eb1cd0ea9d7f6f28468e227db82fea5da93d5b8350bc", size = 19368, upload-time = "2025-12-23T03:19:36.027Z" },
 ]
 
 [[package]]
@@ -1810,6 +1810,7 @@ name = "pow-orin-starter"
 version = "0.0.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "pow-cli" },
     { name = "toml" },
 ]
 
@@ -1817,17 +1818,14 @@ dependencies = [
 sim = [
     { name = "isaacsim", extra = ["all", "extscache"] },
 ]
-staging = [
-    { name = "pow-cli" },
-]
 
 [package.metadata]
 requires-dist = [
     { name = "isaacsim", extras = ["all", "extscache"], marker = "extra == 'sim'", specifier = "==5.1.0" },
-    { name = "pow-cli", marker = "extra == 'staging'", index = "https://test.pypi.org/simple/" },
+    { name = "pow-cli", specifier = ">=0.1.0a1" },
     { name = "toml", specifier = ">=0.10.2" },
 ]
-provides-extras = ["sim", "staging"]
+provides-extras = ["sim"]
 
 [[package]]
 name = "propcache"

@@ -1,7 +1,7 @@
 [sim]
 version = "5.1.0"
 # add paths to additional extension folders
-ext_folders = []
+ext_folders = ["./sim/exts"]
 
 [sim.ros]
 enable_ros = true
@@ -13,6 +13,10 @@ ros_distro = "humble"
 name = "default"
 cpu_performance_mode = true
 headless = false
-extensions = ["isaacsim.code_editor.vscode"]
+extensions = ["isaacsim.code_editor.vscode", "pow.workcell.camera"]
 raw_args = ["--/renderer/raytracingMotion/enabled=false"]
 open_scene_path = ""
+
+[[sim.profiles]]
+name = "no-perf"
+cpu_performance_mode = false
