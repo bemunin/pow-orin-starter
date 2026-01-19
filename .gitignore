@@ -113,4 +113,5 @@ www/js/*
 # Isaac Powerpack
 .pow
 __pycache__/
-.vscode/browse.vc*
+.vscode/browse.vc.db*
+sim/assets/
