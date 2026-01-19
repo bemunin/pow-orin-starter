@@ -112,5 +112,5 @@ www/js/*
 
 # Isaac Powerpack
 .pow
-
 __pycache__/
+.vscode/browse.vc*
