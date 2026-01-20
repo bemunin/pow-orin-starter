@@ -13,7 +13,7 @@ ros_distro = "humble"
 name = "default"
 cpu_performance_mode = false
 headless = false
-extensions = ["isaacsim.code_editor.vscode", "pow.workcell.camera"]
+extensions = ["isaacsim.code_editor.vscode", "pow.camera.teleop_ros"]
 raw_args = ["--/renderer/raytracingMotion/enabled=false"]
 open_scene_path = ""
 
