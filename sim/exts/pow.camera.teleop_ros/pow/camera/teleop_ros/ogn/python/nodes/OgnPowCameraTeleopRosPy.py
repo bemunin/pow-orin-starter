@@ -42,6 +42,8 @@ from isaacsim.core.prims import XFormPrim
 from isaacsim.core.utils.numpy.rotations import (
     euler_angles_to_quats,
     quats_to_euler_angles,
+    wxyz2xyzw,
+    xyzw2wxyz,
 )
 from scipy.spatial.transform import Rotation as R
 
@@ -88,34 +90,43 @@ class OgnPowCameraTeleopRosPy:
                 state.target_prim_path = input_target_prim_path
                 state.target_prim = XFormPrim(state.target_prim_path)
 
+            current_pos, current_rot_quat = state.target_prim.get_world_poses()
+
             # Approximate delta time to 60 FPS (0.016667s) on first run
             dt = max(time - state.last_time, 0.016667)
 
-            # Compute delta rotation quaternion from angular velocity
+            # Compute delta rotation and postion            angle_x_rad = angularX * dt
             angle_x_rad = angularX * dt
             angle_y_rad = angularY * dt
             angle_z_rad = angularZ * dt
-
-            # Compute delta position from linear velocity
             px = linearX * dt
             py = linearY * dt
             pz = linearZ * dt
 
-            current_pos, current_rot_quat = state.target_prim.get_world_poses()
+            # --- Rotation Update ---
+            # use FPS Style: Global Yaw, Local Pitch/Roll
+            # Convert Isaac (w, x, y, z) to Scipy (x, y, z, w)
+            r_current = R.from_quat(wxyz2xyzw(current_rot_quat))
 
-            # Update rotation
-            euler_current = quats_to_euler_angles(current_rot_quat)
-            euler_delta = np.array([[angle_x_rad, angle_y_rad, angle_z_rad]])
-            euler_new = euler_current + euler_delta
-            updated_rot_quat = euler_angles_to_quats(euler_new)
+            # Apply Yaw (Z) globally (around World Z).
+            # This keeps turning stable regardless of pitch/roll.
+            r_yaw = R.from_euler("z", angle_z_rad)
 
+            # Apply Pitch (Y) and Roll (X) locally.
+            # Using separate components helps avoid unintentional cross-coupling.
+            r_local = R.from_euler("yx", [angle_y_rad, angle_x_rad])
+
+            r_new = r_yaw * r_current * r_local
+            updated_rot_quat = xyzw2wxyz(r_new.as_quat())
+
+            # --- Position Update ---
             # Update position, FPS-style movement:
             # Use the new Yaw to determine movement direction on the ground plane.
-            yaw_new = euler_new[:, 2]  # Z-axis rotation (yaw)
-            r_yaw = R.from_euler("z", yaw_new)
+            yaw_new = r_new.as_euler("xyz")[:, 2]
+            r_move_yaw = R.from_euler("z", yaw_new)
 
             delta_pos_target = np.array([[px, py, pz]])
-            delta_pos_world = r_yaw.apply(delta_pos_target)
+            delta_pos_world = r_move_yaw.apply(delta_pos_target)
             updated_pos = current_pos + delta_pos_world
 
             state.last_time = time
