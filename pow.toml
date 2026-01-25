@@ -20,4 +20,7 @@ open_scene_path = ""
 [[sim.profiles]]
 name = "perf"
 cpu_performance_mode = true
-open_scene_path = "./sim/assets/ycb_test_scene_v2.usda"
+
+[[sim.profiles]]
+name = "sim-camera-ros"
+open_scene_path = "./sim/examples/ycb_test_scene.usda"
