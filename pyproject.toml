@@ -3,7 +3,7 @@ name = "pow-orin-starter"
 version = "0.0.0"
 description = ""
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.12"
 dependencies = [
     "toml>=0.10.2",
     "pow-cli==0.1.0a2",
